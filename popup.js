@@ -3,38 +3,28 @@ const mediaContextsMap = new Map();
 let showErrorAlert = true;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const toggleButton = document.getElementById('toggleButton');
+  const statusElement = document.getElementById('status');
   
   // 現在の状態を取得して表示を更新
   chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, { action: 'checkState' }, (response) => {
       if (chrome.runtime.lastError) {
         console.error(chrome.runtime.lastError);
+        statusElement.textContent = chrome.i18n.getMessage('errorMessage');
         return;
       }
-      updateButtonText(response.isMonaural);
-    });
-  });
-
-  // ボタンクリック時の処理
-  toggleButton.addEventListener('click', () => {
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle' }, (response) => {
-        if (chrome.runtime.lastError) {
-          console.error(chrome.runtime.lastError);
-          return;
-        }
-        updateButtonText(response.isMonaural);
-      });
+      if (response) {
+        updateStatusText(response.isMonaural);
+      }
     });
   });
 });
 
-// ボタンのテキストを更新する関数
-function updateButtonText(isMonaural) {
-  const toggleButton = document.getElementById('toggleButton');
-  toggleButton.textContent = chrome.i18n.getMessage(
-    isMonaural ? 'btnDisableMonaural' : 'btnMonauralize'
+// ステータステキストを更新する関数
+function updateStatusText(isMonaural) {
+  const statusElement = document.getElementById('status');
+  statusElement.textContent = chrome.i18n.getMessage(
+    isMonaural ? 'statusMonaural' : 'statusStereo'
   );
 }
 

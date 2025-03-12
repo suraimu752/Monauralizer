@@ -1,6 +1,7 @@
 // メディアコンテキストを管理するマップ
 const mediaContextsMap = new Map();
 let showErrorAlert = true;
+let isMonaural = false;
 
 // モノラル状態をチェックする関数
 function checkMonauralState() {
@@ -59,11 +60,12 @@ function toggleMonaural() {
 
 // メッセージリスナーを設定
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'checkState') {
-    sendResponse({ isMonaural: checkMonauralState() });
-  } else if (request.action === 'toggle') {
-    const result = toggleMonaural();
-    sendResponse({ isMonaural: result });
+  if (request.action === 'toggle') {
+    isMonaural = toggleMonaural();
+    sendResponse({ isMonaural: isMonaural });
+    return true;
+  } else if (request.action === 'checkState') {
+    sendResponse({ isMonaural: isMonaural });
+    return true;
   }
-  return true; // 非同期レスポンスのために必要
 }); 

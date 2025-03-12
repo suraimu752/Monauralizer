@@ -14,5 +14,17 @@
   "btnDisableMonaural": {
     "message": "モノラル化解除",
     "description": "モノラル化を無効にするボタンのテキスト"
+  },
+  "statusMonaural": {
+    "message": "モノラル化しました",
+    "description": "モノラル化状態のメッセージ"
+  },
+  "statusStereo": {
+    "message": "ステレオに戻しました",
+    "description": "ステレオ状態のメッセージ"
+  },
+  "errorMessage": {
+    "message": "エラーが発生しました",
+    "description": "エラー時のメッセージ"
   }
 } 

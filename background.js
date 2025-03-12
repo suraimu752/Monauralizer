@@ -52,10 +52,8 @@ chrome.action.onClicked.addListener(async (tab) => {
     // content.jsにメッセージを送信
     const response = await chrome.tabs.sendMessage(tab.id, { action: 'toggle' });
     if (response) {
-      isMonaural = response.isMonaural;
-      
       // バッジを更新
-      await updateBadge(tab.id, isMonaural);
+      await updateBadge(tab.id, response.isMonaural);
     }
   } catch (error) {
     console.error('Error in click handler:', error);

@@ -29,13 +29,5 @@
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
-  },
-  "web_accessible_resources": [{
-    "resources": [
-      "images/icon16_mono.png",
-      "images/icon48_mono.png",
-      "images/icon128_mono.png"
-    ],
-    "matches": ["<all_urls>"]
-  }]
+  }
 } 

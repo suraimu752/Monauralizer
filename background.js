@@ -1,6 +1,3 @@
-// 拡張機能の状態を保持
-let isMonaural = false;
-
 // バッジを更新する関数
 async function updateBadge(tabId, isMonauralState) {
   // バッジテキストを設定
@@ -15,21 +12,6 @@ async function updateBadge(tabId, isMonauralState) {
     tabId: tabId
   });
 }
-
-// 初期化時に各タブのバッジを設定
-chrome.tabs.query({}, async (tabs) => {
-  for (const tab of tabs) {
-    try {
-      const response = await chrome.tabs.sendMessage(tab.id, { action: 'checkState' });
-      if (response) {
-        await updateBadge(tab.id, response.isMonaural);
-      }
-    } catch (error) {
-      // タブがメッセージングに対応していない場合は無視
-      console.log(`Tab ${tab.id} not ready for messaging`);
-    }
-  }
-});
 
 // タブが更新された時のイベントリスナー
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {

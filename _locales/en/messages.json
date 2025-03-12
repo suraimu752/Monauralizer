@@ -1,0 +1,18 @@
+{
+  "extName": {
+    "message": "Monauralizer",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Convert stereo audio to mono audio in your browser",
+    "description": "Extension description"
+  },
+  "btnMonauralize": {
+    "message": "Monauralize",
+    "description": "Button text to enable mono audio"
+  },
+  "btnDisableMonaural": {
+    "message": "Disable Mono",
+    "description": "Button text to disable mono audio"
+  }
+} 

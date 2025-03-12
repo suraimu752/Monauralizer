@@ -2,43 +2,7 @@
 const mediaContextsMap = new Map();
 let showErrorAlert = true;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleButton = document.getElementById('toggleButton');
-  
-  // 現在の状態を取得して表示を更新
-  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, { action: 'checkState' }, (response) => {
-      if (chrome.runtime.lastError) {
-        console.error(chrome.runtime.lastError);
-        return;
-      }
-      updateButtonText(response.isMonaural);
-    });
-  });
-
-  // ボタンクリック時の処理
-  toggleButton.addEventListener('click', () => {
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle' }, (response) => {
-        if (chrome.runtime.lastError) {
-          console.error(chrome.runtime.lastError);
-          return;
-        }
-        updateButtonText(response.isMonaural);
-      });
-    });
-  });
-});
-
-// ボタンのテキストを更新する関数
-function updateButtonText(isMonaural) {
-  const toggleButton = document.getElementById('toggleButton');
-  toggleButton.textContent = chrome.i18n.getMessage(
-    isMonaural ? 'btnDisableMonaural' : 'btnMonauralize'
-  );
-}
-
-// モノラル状態をチェックする関数（コンテンツスクリプトで実行）
+// モノラル状態をチェックする関数
 function checkMonauralState() {
   return mediaContextsMap.size > 0 && 
     Array.from(mediaContextsMap.values()).every(({ context }) => 
@@ -46,7 +10,7 @@ function checkMonauralState() {
     );
 }
 
-// モノラル化を切り替える関数（コンテンツスクリプトで実行）
+// モノラル化を切り替える関数
 function toggleMonaural() {
   try {
     // すべてのビデオとオーディオ要素を取得
@@ -91,4 +55,15 @@ function toggleMonaural() {
     console.error('Error toggling monaural:', e);
     return false;
   }
-} 
+}
+
+// メッセージリスナーを設定
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'checkState') {
+    sendResponse({ isMonaural: checkMonauralState() });
+  } else if (request.action === 'toggle') {
+    const result = toggleMonaural();
+    sendResponse({ isMonaural: result });
+  }
+  return true; // 非同期レスポンスのために必要
+}); 

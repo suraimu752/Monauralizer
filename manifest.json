@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Monauralizer",
+  "name": "__MSG_extName__",
   "version": "1.0",
-  "description": "モノラル化拡張機能",
-  "default_locale": "ja",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -13,8 +13,13 @@
     }
   },
   "permissions": [
-    "activeTab",
-    "scripting"
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
   ],
   "icons": {
     "16": "images/icon16.png",

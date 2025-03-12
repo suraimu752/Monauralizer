@@ -8,7 +8,13 @@ async function updateBadge(tabId, isMonauralState) {
 
   // バッジの背景色を設定
   await chrome.action.setBadgeBackgroundColor({
-    color: '#4CAF50',
+    color: '#FF5722',
+    tabId: tabId
+  });
+
+  // バッジのテキストカラーを設定
+  await chrome.action.setBadgeTextColor({
+    color: '#FFFFFF',
     tabId: tabId
   });
 }

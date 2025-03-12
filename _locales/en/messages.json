@@ -7,24 +7,8 @@
     "message": "Convert stereo audio to mono audio in your browser",
     "description": "Extension description"
   },
-  "btnMonauralize": {
-    "message": "Monauralize",
-    "description": "Button text to enable mono audio"
-  },
-  "btnDisableMonaural": {
-    "message": "Disable Mono",
-    "description": "Button text to disable mono audio"
-  },
-  "statusMonaural": {
-    "message": "Converted to Mono",
-    "description": "Status message for mono state"
-  },
-  "statusStereo": {
-    "message": "Restored to Stereo",
-    "description": "Status message for stereo state"
-  },
-  "errorMessage": {
-    "message": "An error occurred",
-    "description": "Error message"
+  "errorConflict": {
+    "message": "There might be a conflict with other extensions.",
+    "description": "Extension conflict error message"
   }
 } 

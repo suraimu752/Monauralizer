@@ -13,6 +13,9 @@ async function updateBadge(tabId, isMonauralState) {
   });
 }
 
+// ログ出力用のプレフィックス
+const LOG_PREFIX = '[Monauralizer]';
+
 // タブが更新された時のイベントリスナー
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete') {
@@ -23,7 +26,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       }
     } catch (error) {
       // タブがメッセージングに対応していない場合は無視
-      console.log(`Tab ${tabId} not ready for messaging`);
+      console.log(`${LOG_PREFIX} Tab ${tabId} not ready for messaging`);
     }
   }
 });
@@ -38,6 +41,6 @@ chrome.action.onClicked.addListener(async (tab) => {
       await updateBadge(tab.id, response.isMonaural);
     }
   } catch (error) {
-    console.error('Error in click handler:', error);
+    console.error(`${LOG_PREFIX} Error in click handler:`, error);
   }
 }); 

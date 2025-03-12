@@ -3,6 +3,9 @@ const mediaContextsMap = new Map();
 let showErrorAlert = true;
 let isMonaural = false;
 
+// ログ出力用のプレフィックス
+const LOG_PREFIX = '[Monauralizer]';
+
 // モノラル状態をチェックする関数
 function checkMonauralState() {
   return mediaContextsMap.size > 0 && 
@@ -36,9 +39,9 @@ function toggleMonaural() {
           // マップにメディアコンテキストを保存
           mediaContextsMap.set(media, { context, source });
         } catch (e) {
-          console.error('Error creating audio context:', e);
+          console.error(`${LOG_PREFIX} Error creating audio context:`, e);
           if (showErrorAlert) {
-            alert('他の拡張機能と競合している可能性があります。');
+            alert(chrome.i18n.getMessage('errorConflict'));
             showErrorAlert = false;
           }
           return false;
@@ -53,7 +56,7 @@ function toggleMonaural() {
 
     return !isCurrentlyMonaural;
   } catch (e) {
-    console.error('Error toggling monaural:', e);
+    console.error(`${LOG_PREFIX} Error toggling monaural:`, e);
     return false;
   }
 }
